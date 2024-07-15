@@ -1,0 +1,27 @@
+version: 0.0
+os: linux
+
+files:
+ - source: /scripts/
+   destination: /home/ubuntu/workspace/xceler-ctrm-core/scripts
+
+ - source: /ctrm/launcher/target/launcher-0.0.1-SNAPSHOT.jar
+   destination: /home/ubuntu/workspace/xceler-ctrm-core
+
+permissions:
+  - object: /home/ubuntu/workspace/xceler-ctrm-core/scripts
+    pattern: "**"
+    mode: 755
+    owner: root
+    type:
+      - file
+
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
